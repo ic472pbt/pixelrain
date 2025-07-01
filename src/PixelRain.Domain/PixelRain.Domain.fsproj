@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="UoM.fs" />
     <Compile Include="ValueObjects\PixelCoordinate.fs" />
+    <Compile Include="ValueObjects\PixelTimeseries.fs" />
+    <Compile Include="ValueObjects\GrayscaleImage.fs" />
     <Compile Include="ValueObjects\Rectangle.fs" />
     <Compile Include="ValueObjects\FrameRange.fs" />
+    <Compile Include="Entities\ImageWithMetadata.fs" />
     <Compile Include="Entities\IPixelStream.fs" />
     <Compile Include="Entities\IImageSequence.fs" />
     <Compile Include="Services\ISequenceValidator.fs" />

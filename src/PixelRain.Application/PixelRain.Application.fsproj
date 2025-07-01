@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Interfaces\IImageStream.fs" />
+    <Compile Include="Interfaces\ICompressionService.fs" />
+    <Compile Include="Interfaces\IImageStorage.fs" />
+    <Compile Include="UseCases\IImageIngestionService.fs" />
+    <Compile Include="UseCases\IngestImageSequence.fs" />
+    <Compile Include="Services\ImageIngestionService.fs" />
+    <Compile Include="DTOs\IngestRequest.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PixelRain.Domain\PixelRain.Domain.fsproj" />
+  </ItemGroup>
+
+</Project>

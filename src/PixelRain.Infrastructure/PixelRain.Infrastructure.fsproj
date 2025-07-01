@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="IO\FileSystem.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Compression\" />
+    <Folder Include="Config\" />
+    <Folder Include="Storage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PixelRain.Application\PixelRain.Application.fsproj" />
+  </ItemGroup>
+
+</Project>
