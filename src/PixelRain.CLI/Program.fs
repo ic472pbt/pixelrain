@@ -1,9 +1,20 @@
-﻿open PixelRain.Infrastructure.IO.FileSystem
-open PixelRain.Application.Interfaces
+﻿open Argu
+open PixelRain.Infrastructure.IO.FileSystem
 open PixelRain.Application.UseCases
 open PixelRain.Application.Services
 
-let imageStream: IImageStream = FileSystemImageStream(@"r:\a060ed3e-ccf6-11ef-9e19-0242ac120003")
-let service: IImageIngestionService = ImageIngestionService()
-let map = service.Ingest(imageStream)
+type CLIArguments =
+    | [<Mandatory>] ImageFolder of string
+    interface IArgParserTemplate with
+        member this.Usage = "Specify the folder containing images to ingest."
+
+let parser = ArgumentParser.Create<CLIArguments>(programName = "pr.exe")
+let cliArguments = parser.ParseCommandLine()
+
+let map = 
+    let service: IImageIngestionService = ImageIngestionService()
+    ImageFolder
+        |> cliArguments.GetResult
+        |> FileSystemImageStream
+        |> service.Ingest
 map.Count
