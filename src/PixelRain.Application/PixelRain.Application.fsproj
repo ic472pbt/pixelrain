@@ -6,12 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Interfaces\IPartitionWorker.fs" />
     <Compile Include="Interfaces\IImageStream.fs" />
     <Compile Include="Interfaces\ICompressionService.fs" />
     <Compile Include="Interfaces\IImageStorage.fs" />
+    <Compile Include="Services\PartitionRouter.fs" />
     <Compile Include="UseCases\IImageIngestionService.fs" />
-    <Compile Include="UseCases\IngestImageSequence.fs" />
-    <Compile Include="Services\ImageIngestionService.fs" />
+    <Compile Include="UseCases\StreamingImageIngestionService.fs" />
     <Compile Include="DTOs\IngestRequest.fs" />
   </ItemGroup>
 

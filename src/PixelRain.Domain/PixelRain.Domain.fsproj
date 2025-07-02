@@ -15,6 +15,7 @@
     <Compile Include="Entities\ImageWithMetadata.fs" />
     <Compile Include="Entities\IPixelStream.fs" />
     <Compile Include="Entities\IImageSequence.fs" />
+    <Compile Include="Services\PartitioningService.fs" />
     <Compile Include="Services\ISequenceValidator.fs" />
     <Compile Include="Services\DefaultSequenceValidator.fs" />
   </ItemGroup>

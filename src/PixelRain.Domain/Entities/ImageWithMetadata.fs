@@ -6,5 +6,5 @@ open PixelRain.Domain.ValueObjects
 type ImageWithMetadata = {
     Timestamp: DateTime
     Id: string
-    Image: GrayscaleImage
+    Image: GrayscaleImage    
 }
