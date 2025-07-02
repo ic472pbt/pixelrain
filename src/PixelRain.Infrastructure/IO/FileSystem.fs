@@ -4,22 +4,32 @@ open PixelRain.Domain.ValueObjects
 open System.IO
 open SixLabors.ImageSharp
 open SixLabors.ImageSharp.PixelFormats
+open FSharp.Control
+open PixelRain.Domain.Entities
 
 module FileSystem =
+
+    /// Efficient async file-based image loader for grayscale images (L8)
     type FileSystemImageStream(folderPath: string) =
         interface IImageStream with
-            member _.ReadAll() =
+            member _.ReadAll() : AsyncSeq<ImageWithMetadata> =
                 Directory.EnumerateFiles(folderPath, "*.png")
-                |> Seq.map (fun file ->
-                    use img = Image.Load<L8>(file)
+                |> AsyncSeq.ofSeq
+                |> AsyncSeq.mapAsync (fun file -> async {
+                    use! img = Image.LoadAsync<L8>(file) |> Async.AwaitTask
                     let w, h = img.Width, img.Height
-                    let pixels =
-                        Array.init (w * h) (fun i ->
-                            let x, y = i % w, i / w
-                            img[x, y].PackedValue)
-                    {
+
+                    // Extract pixel memory directly
+                    let pixels1D = Array.zeroCreate<byte> (w * h)
+                    img.CopyPixelDataTo(pixels1D)
+
+                    return {
                         Timestamp = File.GetLastWriteTime(file)
                         Id = Path.GetFileNameWithoutExtension(file)
-                        Image = {Width = w; Height = h; Pixels = pixels}
-                    })
-
+                        Image = {
+                            Width = w
+                            Height = h
+                            Pixels = pixels1D
+                        }
+                    }
+                })

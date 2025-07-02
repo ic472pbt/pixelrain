@@ -3,6 +3,7 @@ open PixelRain.Infrastructure.IO.FileSystem
 open PixelRain.Infrastructure
 open PixelRain.Application.UseCases
 open PixelRain.Application.Services
+open PixelRain.Infrastructure.IO
 
 type CLIArguments =
     | [<Mandatory>] ImageFolder of string
@@ -15,14 +16,20 @@ let parser = ArgumentParser.Create<CLIArguments>(programName = "pr.exe")
 let cliArguments = parser.ParseCommandLine()
 let partitionRouter = 
     let partitionsCount = cliArguments.TryGetResult Partitions |> Option.defaultValue 1
-    let partitionWorker = PartitionWorker.createPartitionWorker (fun image -> ()) // Replace with actual processing logic
+    let outputDirectory = cliArguments.GetResult OutputDirectory
+    let partitionWorker = 
+        PartitionWorker.createPartitionWorker 
+            (fun batch batchId batchLocation -> ()) // Replace with actual processing logic
+            10 
+            (FileSystemStorageInitializer.create outputDirectory)
     PartitionRouter(partitionsCount, partitionWorker)
 
 do
     let ingestionService: IImageIngestionService = StreamingImageIngestionService(partitionRouter) 
     cliArguments.GetResult ImageFolder
         |> FileSystemImageStream
-        |> ingestionService.Ingest
+        |> ingestionService.IngestAsync
+        |> Async.RunSynchronously
 
 partitionRouter.CompleteAll()
 

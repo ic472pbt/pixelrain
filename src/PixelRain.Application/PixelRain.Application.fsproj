@@ -6,14 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Interfaces\IPartitionStorageInitializer.fs" />
     <Compile Include="Interfaces\IPartitionWorker.fs" />
     <Compile Include="Interfaces\IImageStream.fs" />
     <Compile Include="Interfaces\ICompressionService.fs" />
-    <Compile Include="Interfaces\IImageStorage.fs" />
     <Compile Include="Services\PartitionRouter.fs" />
     <Compile Include="UseCases\IImageIngestionService.fs" />
     <Compile Include="UseCases\StreamingImageIngestionService.fs" />
     <Compile Include="DTOs\IngestRequest.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Control.AsyncSeq" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
